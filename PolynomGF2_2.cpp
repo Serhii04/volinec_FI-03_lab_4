@@ -1,3 +1,5 @@
+#pragma once
+
 #include "galua_field_2.h"
 
 PolynomGF2::PolynomGF2(const PolynomGF2& polynom):

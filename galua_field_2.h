@@ -4,6 +4,11 @@
 #include <vector>
 #include <string>
 #include <cmath>
+#include <stdexcept>
+
+typedef std::vector<std::vector<bool>> table;
+
+bool has_optimal_base(const int degree);
 
 class PolynomF2{
 public:
@@ -50,5 +55,30 @@ private:
     PolynomF2 generator = PolynomF2(1, false);
 };
 
+class PolynomGF2_NB:public PolynomF2{
+public:
+    PolynomGF2_NB(const int dim, const int value=0);
+    PolynomGF2_NB(const PolynomF2 polynom);
+    PolynomGF2_NB(const PolynomGF2_NB& polynom);
+    PolynomGF2_NB(std::string value, const int dim);
+    PolynomGF2_NB set(const std::string value);
+    bool check_base(const int base);
+    std::string str() const;
+    std::string strV() const;
+    PolynomGF2_NB operator+(const PolynomGF2_NB &r_val) const;
+    PolynomGF2_NB square() const;
+    PolynomGF2_NB root() const;
+    PolynomGF2_NB trace() const;
+    PolynomGF2_NB operator*(const PolynomGF2_NB &r_val) const;
+    std::vector<std::vector<bool>> get_mult_matrix() const;
+    std::vector<std::vector<bool>> to_matrix() const;
+    std::vector<std::vector<bool>> T() const;
+    // PolynomGF2_NB operator^(const int degree) const;
+    // PolynomGF2_NB T() const;
+    friend std::ostream& operator<<(std::ostream &os, const PolynomGF2_NB &polynom);
+};
+
+#include "F2_help_functions.cpp"
 #include "PolynomF2_2.cpp"
 #include "PolynomGF2_2.cpp"
+#include "PolynomGF2_NB.cpp"
