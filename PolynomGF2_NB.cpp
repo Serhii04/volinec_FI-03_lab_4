@@ -4,26 +4,33 @@
 #include "F2_help_functions.cpp"
 
 
-PolynomGF2_NB::PolynomGF2_NB(const int dim, const int value):PolynomF2(dim){
-    this->check_base(dim);
+PolynomGF2_NB::PolynomGF2_NB(const int dim, const int value):
+    PolynomF2(dim),
+    mult_matrix(new table(this->get_mult_matrix())){
+        this->check_base(dim);
 
-    if(value == 1){
-        for(int i = 0; i < this->value.size(); i++){
-            this->value[i] = 1;
+        if(value == 1){
+            for(int i = 0; i < this->value.size(); i++){
+                this->value[i] = 1;
+            }
         }
-    }
 }
 
-PolynomGF2_NB::PolynomGF2_NB(const PolynomF2 polynom):PolynomF2(polynom){
-    this->check_base(polynom.size());
+PolynomGF2_NB::PolynomGF2_NB(const PolynomF2 polynom):
+    PolynomF2(polynom),
+    mult_matrix(new table(this->get_mult_matrix())){
+        this->check_base(polynom.size());
 }
 
-PolynomGF2_NB::PolynomGF2_NB(const PolynomGF2_NB& polynom):PolynomF2(polynom){
-    this->check_base(polynom.size());
+PolynomGF2_NB::PolynomGF2_NB(const PolynomGF2_NB& polynom):
+    PolynomF2(polynom),
+    mult_matrix(polynom.mult_matrix){
+        this->check_base(polynom.size());
 }
 
 PolynomGF2_NB::PolynomGF2_NB(std::string value, const int dim):
-    PolynomF2(dim){
+    PolynomF2(dim),
+    mult_matrix(new table(this->get_mult_matrix())){
         this->check_base(dim);
         this->set(value);
 }
@@ -104,7 +111,7 @@ PolynomGF2_NB PolynomGF2_NB::root() const{
     PolynomGF2_NB rez(*this);
     bool temp = rez.value.at(0);
 
-    int last_index = value.size()-2;
+    int last_index = value.size()-1;
     for(int i = 0; i < last_index; i++){
         rez.value[i] = rez.value[i+1];
     }    
@@ -177,13 +184,64 @@ PolynomGF2_NB PolynomGF2_NB::operator*(const PolynomGF2_NB &r_val) const{
     PolynomGF2_NB first(*this);
     PolynomGF2_NB second(r_val);
 
-    std::vector<std::vector<bool>> mult_matrix = get_mult_matrix();
-
     for(int i = 0; i < rez.size(); i++){
-        rez.value[i] = mult_matrixes(mult_matrixes(first.to_matrix(), mult_matrix), second.T())[0][0];
+        rez.value[i] = mult_matrixes(mult_matrixes(first.to_matrix(), *(this->mult_matrix)), second.T())[0][0];
+        // std::cout << "matix mult:" << std::endl;
+        // print_table(first.to_matrix());
+        // print_table(*(this->mult_matrix));
+        // std::cout << "first mult rez :" << std::endl;
+        // print_table(mult_matrixes(first.to_matrix(), *(this->mult_matrix)));
+        // print_table(second.T());
+        // print_table(mult_matrixes(mult_matrixes(first.to_matrix(), *(this->mult_matrix)), second.T()));
         first = first.root();
         second = second.root();
     }
+
+    return rez;
+}
+
+PolynomGF2_NB PolynomGF2_NB::operator^(const int degree) const{
+    if(degree == 2){
+        return this->square();
+    }
+
+    PolynomGF2_NB rez(*this);
+    for(int i = 1; i < degree; i++){
+        rez = rez * *this;
+    }
+
+    return rez;
+}
+
+// PolynomGF2_NB PolynomGF2_NB::inverse() const{
+//     PolynomGF2_NB temp = PolynomGF2_NB(*this);
+//     PolynomGF2_NB rez(this->size(), true);
+
+//     for(int i = 1; i < this->size(); i++){
+//         temp = temp.square();
+//         rez = rez * temp;
+//     }
+
+//     return rez;
+// }
+
+PolynomGF2_NB PolynomGF2_NB::inverse() const{
+    if(this->strP() == "0"){
+        std::cerr << "zero doesn`t have invers element" << std::endl;
+        throw "zero doesn`t have invers element";
+    }
+
+    int iterate_to = this->size() - 2 + 1;
+
+    PolynomGF2_NB rez(*this);
+    PolynomGF2_NB temp(*this);
+    for(int i = 1; i < iterate_to; ++i){
+        temp = temp.square();
+        rez = rez * temp;
+        // std::cout << i << ": " << rez << std::endl;
+    }
+
+    rez = rez^2;
 
     return rez;
 }

@@ -82,15 +82,15 @@ table mult_matrixes(const table& l_val, const table& r_val){
 }
 
 void print_table(const table& t){
-    cout << "[" << endl;
+    std::cout << "[" << std::endl;
     for(int i = 0; i < t.size(); i++){
-        cout << "    [ ";
+        std::cout << "    [ ";
         for(int j = 0; j < t[0].size(); j++){
-            cout << t[i][j] << " ";
+            std::cout << t[i][j] << " ";
         }
-        cout << "]" << endl;
+        std::cout << "]" << std::endl;
     }
-    cout << "]" << endl;
+    std::cout << "]" << std::endl;
 }
 
 

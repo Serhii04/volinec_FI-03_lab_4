@@ -70,12 +70,15 @@ public:
     PolynomGF2_NB root() const;
     PolynomGF2_NB trace() const;
     PolynomGF2_NB operator*(const PolynomGF2_NB &r_val) const;
+    PolynomGF2_NB multiplicate(const PolynomGF2_NB &r_val, const table &mult_matrix) const;
     std::vector<std::vector<bool>> get_mult_matrix() const;
     std::vector<std::vector<bool>> to_matrix() const;
     std::vector<std::vector<bool>> T() const;
-    // PolynomGF2_NB operator^(const int degree) const;
-    // PolynomGF2_NB T() const;
+    PolynomGF2_NB operator^(const int degree) const;
+    PolynomGF2_NB inverse() const;
     friend std::ostream& operator<<(std::ostream &os, const PolynomGF2_NB &polynom);
+private:
+    table *mult_matrix;
 };
 
 #include "F2_help_functions.cpp"
