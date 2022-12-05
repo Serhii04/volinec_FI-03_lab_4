@@ -186,13 +186,6 @@ PolynomGF2_NB PolynomGF2_NB::operator*(const PolynomGF2_NB &r_val) const{
 
     for(int i = 0; i < rez.size(); i++){
         rez.value[i] = mult_matrixes(mult_matrixes(first.to_matrix(), *(this->mult_matrix)), second.T())[0][0];
-        // std::cout << "matix mult:" << std::endl;
-        // print_table(first.to_matrix());
-        // print_table(*(this->mult_matrix));
-        // std::cout << "first mult rez :" << std::endl;
-        // print_table(mult_matrixes(first.to_matrix(), *(this->mult_matrix)));
-        // print_table(second.T());
-        // print_table(mult_matrixes(mult_matrixes(first.to_matrix(), *(this->mult_matrix)), second.T()));
         first = first.root();
         second = second.root();
     }
@@ -238,7 +231,7 @@ PolynomGF2_NB PolynomGF2_NB::inverse() const{
     for(int i = 1; i < iterate_to; ++i){
         temp = temp.square();
         rez = rez * temp;
-        // std::cout << i << ": " << rez << std::endl;
+        std::cout << i << ": " << rez << std::endl;
     }
 
     rez = rez^2;
