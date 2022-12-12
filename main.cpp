@@ -23,7 +23,7 @@ int main()
     cout << "a^2 = " << a.square() << endl;
     cout << "trace a = " << a.trace() << endl;
     cout << endl;
-    
+
     cout << "a + b = " << a + b << endl;
     cout << "a * b = " << a * b << endl;
     cout << endl;
@@ -32,7 +32,7 @@ int main()
     cout << "a * c + b * c = " << a * c + b * c << endl;
     cout << endl;
 
-    cout << "a^7 = " << (a^7) << endl;
+    cout << "a^7 = " << (a ^ 7) << endl;
     cout << endl;
 
     c = a.inverse();
@@ -41,5 +41,3 @@ int main()
 
     return 0;
 }
-
-
