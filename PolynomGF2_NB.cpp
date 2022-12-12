@@ -231,7 +231,7 @@ PolynomGF2_NB PolynomGF2_NB::inverse() const{
     for(int i = 1; i < iterate_to; ++i){
         temp = temp.square();
         rez = rez * temp;
-        std::cout << i << ": " << rez << std::endl;
+        // std::cout << i << ": " << rez << std::endl;
     }
 
     rez = rez^2;
