@@ -11,13 +11,13 @@ int main()
     PolynomGF2_NB b("000101", wid);
     PolynomGF2_NB c(wid, 1);
 
-    cout << "a * 0 = " << a * PolynomGF2_NB(wid, 0) << endl;
-    cout << "a * 1 = " << a * PolynomGF2_NB(wid, 1) << endl;
-    cout << endl;
-
     cout << "a = " << a << endl;
     cout << "b = " << b << endl;
     cout << "c = " << c << endl;
+    cout << endl;
+
+    cout << "a * 0 = " << a * PolynomGF2_NB(wid, 0) << endl;
+    cout << "a * 1 = " << a * PolynomGF2_NB(wid, 1) << endl;
     cout << endl;
 
     cout << "a^2 = " << a.square() << endl;
@@ -41,3 +41,6 @@ int main()
 
     return 0;
 }
+
+
+
